@@ -986,6 +986,11 @@ rangy.createModule("TextRange", ["WrappedSelection"], function(api, module) {
             }
             var nextNode, nextOffset, child;
             if (offset == nodeWrapper.getLength()) {
+                if (node.dataset && node.dataset.rangyRoot == 'true') {
+                  // If already at the root, don't go any further up the DOM tree
+                  return null;
+                }
+
                 // Move onto the next node
                 nextNode = node.parentNode;
                 nextOffset = nextNode ? nodeWrapper.getNodeIndex() + 1 : 0;
@@ -1013,6 +1018,11 @@ rangy.createModule("TextRange", ["WrappedSelection"], function(api, module) {
             var nodeWrapper = pos.nodeWrapper, node = pos.node, offset = pos.offset, session = nodeWrapper.session;
             var previousNode, previousOffset, child;
             if (offset == 0) {
+                if (node.dataset && node.dataset.rangyRoot == 'true') {
+                  // If already at the root, don't go any further up the DOM tree
+                  return null;
+                }
+                
                 previousNode = node.parentNode;
                 previousOffset = previousNode ? nodeWrapper.getNodeIndex() : 0;
             } else {
